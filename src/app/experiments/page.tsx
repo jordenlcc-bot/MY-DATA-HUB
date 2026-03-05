@@ -54,7 +54,7 @@ export default function ExperimentsPage() {
 
             {/* Left Column: Logs & Metrics */}
             <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
-              <SystemLogs logs={logs} />
+              <SystemLogs initialLogs={logs} />
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <MetricCard

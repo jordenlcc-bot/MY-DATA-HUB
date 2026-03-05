@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 interface DatasetProps {
   title: string;
   description: string;
@@ -49,29 +53,28 @@ export function DatasetCard({ title, description, type, size, color }: DatasetPr
 }
 
 export function DatasetExplorer() {
-  const datasets = [
-    {
-      title: "Neural Network Weights",
-      description: "Pre-trained weights for the latest transformer architecture focusing on NLP tasks.",
-      type: "JSON",
-      size: "4.2GB",
-      color: "primary" as const,
-    },
-    {
-      title: "Behavioral Logs",
-      description: "Aggregated user interaction data from the last quarter for synthetic training.",
-      type: "CSV",
-      size: "12.5GB",
-      color: "purple" as const,
-    },
-    {
-      title: "Validation Metadata",
-      description: "Gold standard validation set for final model benchmarking and A/B testing.",
-      type: "PARQUET",
-      size: "820MB",
-      color: "blue" as const,
-    },
-  ];
+  const [datasets, setDatasets] = useState<DatasetProps[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchDatasets() {
+      try {
+        const response = await fetch('/api/datasets');
+        if (response.ok) {
+          const data = await response.json();
+          setDatasets(data);
+        } else {
+          console.error("Failed to fetch datasets");
+        }
+      } catch (error) {
+        console.error("Error fetching datasets:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchDatasets();
+  }, []);
 
   return (
     <section>
@@ -79,11 +82,21 @@ export function DatasetExplorer() {
         <h3 className="text-lg font-medium text-slate-300">Active Datasets</h3>
         <button className="text-sm text-primary hover:underline">View all assets</button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {datasets.map((dataset, idx) => (
-          <DatasetCard key={idx} {...dataset} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex justify-center p-8">
+          <div className="w-8 h-8 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
+        </div>
+      ) : datasets.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {datasets.map((dataset, idx) => (
+            <DatasetCard key={idx} {...dataset} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center p-8 text-slate-500 glass-panel rounded-xl">
+          No datasets found.
+        </div>
+      )}
     </section>
   );
 }

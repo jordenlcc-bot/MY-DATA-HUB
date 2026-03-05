@@ -1,8 +1,55 @@
-interface SystemLogsProps {
-  logs: { timestamp: string; level: string; message: string; type?: string }[];
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
+
+interface LogEntry {
+  timestamp: string;
+  level: string;
+  message: string;
+  type?: string;
 }
 
-export function SystemLogs({ logs }: SystemLogsProps) {
+interface SystemLogsProps {
+  initialLogs?: LogEntry[];
+}
+
+export function SystemLogs({ initialLogs = [] }: SystemLogsProps) {
+  const [logs, setLogs] = useState<LogEntry[]>(initialLogs);
+  const logsEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    async function fetchLogs() {
+      try {
+        const response = await fetch('/api/logs');
+        if (response.ok) {
+          const data = await response.json();
+          // Assuming the backend returns an array of logs or an object with a logs array
+          if (data && Array.isArray(data.logs)) {
+            setLogs(data.logs);
+          } else if (Array.isArray(data)) {
+            setLogs(data);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching logs:", error);
+      }
+    }
+
+    // Only fetch if we didn't receive initial logs, or we want to poll
+    if (initialLogs.length === 0) {
+        fetchLogs();
+    }
+
+    // Polling for new logs
+    const interval = setInterval(fetchLogs, 3000);
+    return () => clearInterval(interval);
+  }, [initialLogs.length]);
+
+  useEffect(() => {
+    // Auto-scroll to bottom when logs update
+    logsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [logs]);
+
   const getLevelColor = (level: string) => {
     switch (level.toUpperCase()) {
       case 'INFO':
@@ -48,9 +95,10 @@ export function SystemLogs({ logs }: SystemLogsProps) {
             </div>
           ))}
           <div className="flex gap-4 animate-pulse">
-            <span className="text-slate-600">[14:20:25]</span>
+            <span className="text-slate-600">[{new Date().toLocaleTimeString([], { hour12: false })}]</span>
             <span className="text-slate-400">_</span>
           </div>
+          <div ref={logsEndRef} />
         </div>
       </div>
     </div>
