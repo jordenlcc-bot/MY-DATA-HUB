@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0c0b;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-primary: #19e65e;
+  --color-accent-purple: #bc13fe;
+  --color-background-dark: #0a0c0b;
+  --color-surface-dark: #161b26;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-lexend);
+}
+
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), sans-serif;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background: rgba(22, 27, 38, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .glow-primary {
+    box-shadow: 0 0 15px rgba(25, 230, 94, 0.3);
+  }
+  .glow-purple {
+    box-shadow: 0 0 15px rgba(188, 19, 254, 0.3);
+  }
+  .pipeline-line {
+    background: linear-gradient(90deg, #19e65e, #bc13fe);
+    height: 2px;
+    width: 100%;
+  }
+}
