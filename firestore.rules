@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if the user is authenticated and belongs to the workshop
+    function isTenant(workshopId) {
+      return request.auth != null && request.auth.token.workshop_id == workshopId;
+    }
+
+    // Deny access to collection groups to prevent cross-tenant queries
+    match /{path=**}/customers/{doc} { allow read, write: if false; }
+    match /{path=**}/leads/{doc} { allow read, write: if false; }
+    match /{path=**}/quotations/{doc} { allow read, write: if false; }
+    match /{path=**}/bookings/{doc} { allow read, write: if false; }
+    match /{path=**}/invoices/{doc} { allow read, write: if false; }
+    match /{path=**}/audit_logs/{doc} { allow read, write: if false; }
+
+    // Scoped rules under specific workshops
+    match /workshops/{workshopId} {
+      allow read: if isTenant(workshopId);
+      allow write: if isTenant(workshopId); // Or restrict write to only super admins
+
+      match /customers/{customerId} {
+        allow read, write: if isTenant(workshopId);
+      }
+      match /leads/{leadId} {
+        allow read, write: if isTenant(workshopId);
+      }
+      match /quotations/{quotationId} {
+        allow read, write: if isTenant(workshopId);
+      }
+      match /bookings/{bookingId} {
+        allow read, write: if isTenant(workshopId);
+      }
+      match /invoices/{invoiceId} {
+        allow read, write: if isTenant(workshopId);
+      }
+      match /audit_logs/{logId} {
+        // Usually audit logs are append-only
+        allow read, create: if isTenant(workshopId);
+        allow update, delete: if false;
+      }
+    }
+  }
+}
