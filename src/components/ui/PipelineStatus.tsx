@@ -23,10 +23,9 @@ export function PipelineStatus() {
         if (response.ok) {
           const data = await response.json();
           // Assuming the API returns an array of nodes or an object with a nodes array
-          if (data && Array.isArray(data.nodes)) {
-            setNodes(data.nodes);
-          } else if (Array.isArray(data)) {
-            setNodes(data);
+          const nodesData = data?.nodes ?? data;
+          if (Array.isArray(nodesData)) {
+            setNodes(nodesData);
           }
         }
       } catch (error) {

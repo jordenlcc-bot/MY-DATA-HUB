@@ -29,14 +29,9 @@ export function VectorSearchPanel() {
       const response = await fetch(`/api/vector/search?q=${encodeURIComponent(query)}`);
       if (response.ok) {
         const data = await response.json();
-        if (data && Array.isArray(data.results)) {
-          setScores(data.results.map((item: { id?: string; score: number }) => ({
-            id: item.id || `#id_${Math.floor(Math.random() * 10000)}`,
-            score: item.score,
-            percentage: `${(item.score * 100).toFixed(1)}%`
-          })));
-        } else if (Array.isArray(data)) {
-           setScores(data.map((item: { id?: string; score: number }) => ({
+        const resultsData = data?.results ?? data;
+        if (Array.isArray(resultsData)) {
+          setScores(resultsData.map((item: { id?: string; score: number }) => ({
             id: item.id || `#id_${Math.floor(Math.random() * 10000)}`,
             score: item.score,
             percentage: `${(item.score * 100).toFixed(1)}%`
