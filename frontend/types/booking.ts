@@ -5,6 +5,7 @@ export interface Booking {
   customer_name: string;
   status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled';
   booking_date: string;
+  vehicle_model: string;
   estimated_duration_minutes: number;
   assigned_mechanic: string;
   created_at: string;
@@ -14,6 +15,7 @@ export interface Booking {
 export interface BookingCreateRequest {
   quotation_id: string;
   booking_date: string;
+  vehicle_model: string;
   estimated_duration_minutes: number;
   assigned_mechanic: string;
 }

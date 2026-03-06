@@ -6,6 +6,8 @@ export interface Lead {
   status: 'unread' | 'read' | 'quoted' | 'archived';
   inquiry_details: string;
   vehicle_model: string;
+  whatsapp_message_id?: string;
+  attachment_urls?: string[];
   created_at: string;
   updated_at: string;
 }

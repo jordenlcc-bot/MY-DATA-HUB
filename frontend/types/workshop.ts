@@ -21,6 +21,8 @@ export interface Customer {
   name: string;
   phone: string;
   email?: string;
+  vehicle_plate: string;
+  vehicle_year: number;
   consent_given: boolean;
   consent_date: string;
   data_source: 'whatsapp' | 'walk-in' | 'phone';

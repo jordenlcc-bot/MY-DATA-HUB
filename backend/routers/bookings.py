@@ -22,6 +22,7 @@ async def get_bookings(request: Request, date: str = "today"):
             "customer_name": "Ahmad",
             "status": "scheduled",
             "booking_date": "2024-05-15T14:00:00Z",
+            "vehicle_model": "Proton Saga",
             "estimated_duration_minutes": 120,
             "assigned_mechanic": "Ali"
         }

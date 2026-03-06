@@ -17,6 +17,7 @@ const mockBookings: Booking[] = [
     status: "scheduled",
     booking_date: "2024-05-15T14:00:00Z",
     estimated_duration_minutes: 120,
+    vehicle_model: "Proton Saga",
     assigned_mechanic: "Ali",
     created_at: "2024-05-10T10:00:00Z",
     updated_at: "2024-05-10T10:00:00Z"

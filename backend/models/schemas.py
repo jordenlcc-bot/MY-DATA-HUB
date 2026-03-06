@@ -7,6 +7,8 @@ class Customer(BaseModel):
     name: str
     phone: str
     email: Optional[str] = None
+    vehicle_plate: str
+    vehicle_year: int
     consent_given: bool
     consent_date: datetime
     data_source: str
@@ -20,6 +22,8 @@ class Lead(BaseModel):
     status: str
     inquiry_details: str
     vehicle_model: str
+    whatsapp_message_id: Optional[str] = None
+    attachment_urls: Optional[List[str]] = None
     created_at: datetime
     updated_at: datetime
 
@@ -52,6 +56,7 @@ class Booking(BaseModel):
     customer_id: str
     status: str
     booking_date: datetime
+    vehicle_model: str
     estimated_duration_minutes: int
     assigned_mechanic: str
     created_at: datetime
@@ -60,6 +65,7 @@ class Booking(BaseModel):
 class BookingCreateRequest(BaseModel):
     quotation_id: str
     booking_date: datetime
+    vehicle_model: str
     estimated_duration_minutes: int
     assigned_mechanic: str
 

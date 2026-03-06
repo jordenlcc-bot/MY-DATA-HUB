@@ -28,6 +28,8 @@
     *   `name`: string
     *   `phone`: string
     *   `email`: string (optional)
+    *   `vehicle_plate`: string
+    *   `vehicle_year`: integer
     *   `consent_given`: boolean
     *   `consent_date`: timestamp
     *   `data_source`: string (e.g., "whatsapp", "walk-in")
@@ -42,6 +44,8 @@
     *   `status`: string (e.g., "unread", "read", "quoted", "archived")
     *   `inquiry_details`: string
     *   `vehicle_model`: string
+    *   `whatsapp_message_id`: string (optional)
+    *   `attachment_urls`: array of strings (optional)
     *   `created_at`: timestamp
     *   `updated_at`: timestamp
 
@@ -69,6 +73,7 @@
     *   `customer_id`: reference (path to `customers/{customer_id}`)
     *   `status`: string (e.g., "scheduled", "in_progress", "completed", "cancelled")
     *   `booking_date`: timestamp
+    *   `vehicle_model`: string
     *   `estimated_duration_minutes`: integer
     *   `assigned_mechanic`: string
     *   `created_at`: timestamp
