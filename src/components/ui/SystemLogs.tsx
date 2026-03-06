@@ -24,10 +24,9 @@ export function SystemLogs({ initialLogs = [] }: SystemLogsProps) {
         if (response.ok) {
           const data = await response.json();
           // Assuming the backend returns an array of logs or an object with a logs array
-          if (data && Array.isArray(data.logs)) {
-            setLogs(data.logs);
-          } else if (Array.isArray(data)) {
-            setLogs(data);
+          const logsData = data?.logs ?? data;
+          if (Array.isArray(logsData)) {
+            setLogs(logsData);
           }
         }
       } catch (error) {
