@@ -31,13 +31,13 @@ export function VectorSearchPanel() {
         const data = await response.json();
         if (data && Array.isArray(data.results)) {
           setScores(data.results.map((item: { id?: string; score: number }) => ({
-            id: item.id || `#id_${Math.floor(Math.random() * 10000)}`,
+            id: item.id || `#id_${crypto.randomUUID()}`,
             score: item.score,
             percentage: `${(item.score * 100).toFixed(1)}%`
           })));
         } else if (Array.isArray(data)) {
            setScores(data.map((item: { id?: string; score: number }) => ({
-            id: item.id || `#id_${Math.floor(Math.random() * 10000)}`,
+            id: item.id || `#id_${crypto.randomUUID()}`,
             score: item.score,
             percentage: `${(item.score * 100).toFixed(1)}%`
           })));
