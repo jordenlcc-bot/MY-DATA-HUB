@@ -6,31 +6,31 @@ interface MetricCardProps {
   color: "primary" | "purple" | "yellow";
 }
 
-export function MetricCard({ label, value, subtext, icon, color }: MetricCardProps) {
-  const colorMap = {
-    primary: {
-      border: "border-l-primary",
-      text: "text-primary",
-      bg: "bg-primary",
-      iconColor: "text-green-500", // using green since primary is neon green anyway
-      shadow: "shadow-[0_0_8px_#19e65e]",
-    },
-    purple: {
-      border: "border-l-accent-purple",
-      text: "text-accent-purple",
-      bg: "bg-accent-purple",
-      iconColor: "text-accent-purple",
-      shadow: "shadow-[0_0_8px_#bc13fe]",
-    },
-    yellow: {
-      border: "border-l-yellow-500",
-      text: "text-yellow-500",
-      bg: "bg-yellow-500",
-      iconColor: "text-yellow-500",
-      shadow: "shadow-[0_0_8px_#eab308]",
-    },
-  };
+const colorMap = {
+  primary: {
+    border: "border-l-primary",
+    text: "text-primary",
+    bg: "bg-primary",
+    iconColor: "text-green-500", // using green since primary is neon green anyway
+    shadow: "shadow-[0_0_8px_#19e65e]",
+  },
+  purple: {
+    border: "border-l-accent-purple",
+    text: "text-accent-purple",
+    bg: "bg-accent-purple",
+    iconColor: "text-accent-purple",
+    shadow: "shadow-[0_0_8px_#bc13fe]",
+  },
+  yellow: {
+    border: "border-l-yellow-500",
+    text: "text-yellow-500",
+    bg: "bg-yellow-500",
+    iconColor: "text-yellow-500",
+    shadow: "shadow-[0_0_8px_#eab308]",
+  },
+} as const;
 
+export function MetricCard({ label, value, subtext, icon, color }: MetricCardProps) {
   const selected = colorMap[color];
 
   return (
